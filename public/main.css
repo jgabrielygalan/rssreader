@@ -1,0 +1,13 @@
+#nav {
+	float:left;
+	width: 30%;
+}
+
+#content {
+	float:left;
+	width: 70%;
+}
+
+.itemTitle {
+	background-color: light-blue;
+}

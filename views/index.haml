@@ -1,0 +1,25 @@
+!!! 5
+%html
+  %head
+    %link(rel="stylesheet" type="text/css" href="main.css")
+    %link(rel="stylesheet" type="text/css" href="jquery-ui.css")
+    %script(src='/jquery-1.9.1.js')
+    %script(src='/jquery-ui.js')
+    %script(src='/rssreader.js')
+  %body
+    %h1
+      %a(title="home" href="/")= settings.name
+    #nav
+      - @feeds.each_with_index do |feed, i|
+        .feedTitle 
+          %img{src: "#{feed["link"]}/favicon.ico"}
+          %a{:href => "/#{i}"}= feed["title"]
+    #content
+      #accordion
+        - @items.each do |item|
+          %h3
+            = item["title"]
+          .itemContent
+            = item["content"]
+    %footer
+      %small @ Copyright #{settings.author} #{Time.now.year}. All Rights Reserved.

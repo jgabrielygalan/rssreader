@@ -1,0 +1,30 @@
+* subscribe to a feed
+	ADD <feedID> with URI, title
+	SADD feeds feedURI
+
+* Get list of feeds: title + id + # of unread items
+	SMEMBERS feeds
+	HGETALL feed:feedURI * n
+
+* For a feed
+	- Get list of items: title + read flag
+		all: zrevrange feed:<feedURI>:items 0 -1
+			 hgetall item:itemID
+		first one: zrevrange feed:<feedURI>:items 0 0
+
+	- Update items from URI in background
+	- unsubscribe from feed
+
+* For an item
+	- Get attributes: title, read flag, content, URI
+	- Mark as read
+		HSET item:itemID read 1	
+
+
+
+Redis Keys:
+
+feeds -> set of feedURI
+feed:<feedURI> -> hash with #unread, title, URI
+feed:<feedURI>:items --> sorted set [by pubDate] of itemID
+item:<itemID> --> hash with read flag, title, content, URI

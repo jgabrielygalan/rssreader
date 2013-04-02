@@ -1,0 +1,3 @@
+require './rssreader'
+
+run RssReader
