@@ -9,5 +9,4 @@ if $redis.exists "feed:#{feed_url}"
 end
 
 $redis.sadd("feeds", feed_url)
-$redis.hset("feed:#{feed_url}", "URI", feed_url)
 puts "feed added"

@@ -13,12 +13,12 @@ class RssReader < Sinatra::Base
 			settings.redis
 		end
 
-		def item_data feed_position
-			item_ids = redis.zrevrange("feed:#{@feeds[feed_position]["URI"]}:items", 0, -1)
-			item_ids.map do |item_id|
-				item = redis.hgetall("item:#{item_id}")
-				item["item_id"] = item_id
-				item
+		def entry_data feed
+			entry_ids = redis.zrevrange("feed:#{feed["feed_url"]}:entries", 0, -1)
+			entry_ids.map do |entry_id|
+				entry = redis.hgetall("entry:#{entry_id}")
+				entry["entry_id"] = entry_id
+				entry
 			end
 		end
 	end
@@ -31,12 +31,12 @@ class RssReader < Sinatra::Base
 	end
 
 	get '/' do
-		@items = item_data 0
+		@entries = entry_data @feeds.first
 		haml :index
 	end
 
-	get '/:pos' do |pos|
-		@items = item_data Integer(pos)
+	get '/entries/:pos' do |pos|
+		@entries = entry_data @feeds[Integer(pos)]
 		haml :index
 	end
 end
