@@ -11,3 +11,17 @@
 .itemTitle {
 	background-color: light-blue;
 }
+
+.feedDescription {
+	font-size: small;
+}
+
+.entryTitle {
+	float:left;
+}
+
+.entryDate {
+	font-size: smaller;
+	color: lightgrey;
+	#float:right;
+}

@@ -1,8 +1,8 @@
 !!! 5
 %html
   %head
-    %link(rel="stylesheet" type="text/css" href="main.css")
-    %link(rel="stylesheet" type="text/css" href="jquery-ui.css")
+    %link(rel="stylesheet" type="text/css" href="/main.css")
+    %link(rel="stylesheet" type="text/css" href="/jquery-ui.css")
     %script(src='/jquery-1.9.1.js')
     %script(src='/jquery-ui.js')
     %script(src='/rssreader.js')
@@ -12,14 +12,20 @@
     #nav
       - @feeds.each_with_index do |feed, i|
         .feedTitle 
-          %img{src: "#{feed["link"]}/favicon.ico"}
-          %a{:href => "/#{i}"}= feed["title"]
+          %img{src: "#{feed["url"]}/favicon.ico", width: "16px"}
+          %a{:href => "/entries/#{i}"}= feed["title"]
+          %br
+          .feedDescription
+            = feed["description"]
     #content
       #accordion
-        - @items.each do |item|
+        - @entries.each do |entry|
           %h3
-            = item["title"]
+            .entryTitle
+              = "#{entry["title"]}"
+            .entryDate
+              = "#{entry["published"]}"
           .itemContent
-            = item["content"]
+            = entry["content"]
     %footer
       %small @ Copyright #{settings.author} #{Time.now.year}. All Rights Reserved.
